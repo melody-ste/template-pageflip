@@ -1,19 +1,33 @@
+import { useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import Page from "./Page";
 
 export default function Book() {
+
+  const [size, setSize] = useState({ w: 350, h: 500 });
+
+  useEffect(() => {
+    const updateSize = () => {
+      const isMobile = window.innerWidth < 768;
+
+      const w = isMobile ? window.innerWidth * 0.98 : Math.min(window.innerWidth * 0.9, 350);
+      const h = w * 1.42;
+      setSize({ w, h });
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
   return (
     <HTMLFlipBook
-      width={350}
-      height={500}
+      width={size.w}
+      height={size.h}
       size="fixed"
-      minWidth={315}
-      maxWidth={1000}
-      minHeight={400}
-      maxHeight={1536}
       maxShadowOpacity={0.5}
-      showCover={true}
-      mobileScrollSupport={true}
+      showCover
+      mobileScrollSupport
     >
       <Page number={1}>Couverture</Page>
       <Page number={2}>Page 1</Page>
