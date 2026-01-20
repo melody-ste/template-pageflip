@@ -6,26 +6,30 @@ export default function Book() {
 
   const bookRef = useRef(null);
   const [size, setSize] = useState({ w: 350, h: 500 });
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [currentPage, setCurrentPage] = useState(0);
 
-  useEffect(() => {
-    const updateSize = () => {
-    const mobile = window.innerWidth < 768;
-    setIsMobile(mobile);
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-    const pageWidth = mobile ? window.innerWidth * 0.95 : Math.min(window.innerWidth * 0.45, 420);
+  // Mobile detection
+  useEffect(() => {
+    const onResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Resize
+  useEffect(() => {
+    const rawWidth = isMobile ? window.innerWidth * 0.85 : window.innerWidth * 0.45;
+    const pageWidth = clamp(rawWidth, 280, 400);
 
     const pageHeight = pageWidth * 1.42;
 
     setSize({ w: pageWidth, h: pageHeight });
-  };
-
-
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
