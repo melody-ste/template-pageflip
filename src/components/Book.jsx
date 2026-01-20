@@ -6,6 +6,7 @@ export default function Book() {
 
   const bookRef = useRef(null);
   const [size, setSize] = useState({ w: 350, h: 500 });
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const updateSize = () => {
@@ -36,12 +37,13 @@ export default function Book() {
           showCover
           mobileScrollSupport
           usePortrait={false} 
+          onFlip={(e) => setCurrentPage(e.data)}
         >
-          <Page number={1}>Couverture</Page>
-          <Page number={2}>Page 1</Page>
-          <Page number={3}>Page 2</Page>
-          <Page number={4}>Page 3</Page>
-          <Page number={5}>Dos</Page>
+          <Page index={0} current={currentPage}>Couverture</Page>
+          <Page index={1} current={currentPage}>Page 1</Page>
+          <Page index={2} current={currentPage}>Page 2</Page>
+          <Page index={3} current={currentPage}>Page 3</Page>
+          <Page index={4} current={currentPage}>Dos</Page>
         </HTMLFlipBook>
 
         <div className="book-controls">
