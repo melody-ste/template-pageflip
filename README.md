@@ -53,7 +53,7 @@ export default App;
 
 ## Customization
 
-- **Pages:** Modify the `&lt;Page&gt;` components inside `Book.jsx` to add your own content. Each page must use `forwardRef` as shown.
+- **Pages:** Modify the <Page> components inside `Book.jsx` to add your own content. Each page must use `forwardRef` as shown.
 
 - **Size & Responsiveness:** The page width and height are automatically calculated, but you can adjust the `clamp` function in `Book.jsx` to allow different min/max sizes.
 
@@ -63,4 +63,5 @@ export default App;
 
 - Each page **must use `forwardRef`** for `react-pageflip` to measure and render pages correctly.
 - The template uses a **mobile breakpoint at 768px**, showing 1 page on mobile and 2 pages on desktop.
+
 - To add more pages, just duplicate the `&lt;Page&gt;` elements in `Book.jsx` and provide unique content.
