@@ -6,13 +6,15 @@ export default function Book() {
 
   const bookRef = useRef(null);
   const [size, setSize] = useState({ w: 350, h: 500 });
+  const [isMobile, setIsMobile] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     const updateSize = () => {
-    const isMobile = window.innerWidth < 768;
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
 
-    const pageWidth = isMobile ? window.innerWidth * 0.98 : Math.min(window.innerWidth * 0.45, 420);
+    const pageWidth = mobile ? window.innerWidth * 0.95 : Math.min(window.innerWidth * 0.45, 420);
 
     const pageHeight = pageWidth * 1.42;
 
@@ -29,6 +31,7 @@ export default function Book() {
     <>
       <div className="book-container">
         <HTMLFlipBook
+          key={isMobile ? "mobile" : "desktop"}
           ref={bookRef}
           width={size.w}
           height={size.h}
@@ -36,7 +39,7 @@ export default function Book() {
           maxShadowOpacity={0.5}
           showCover
           mobileScrollSupport
-          usePortrait={false} 
+          usePortrait={isMobile} 
           onFlip={(e) => setCurrentPage(e.data)}
         >
           <Page index={0} current={currentPage}>Couverture</Page>
